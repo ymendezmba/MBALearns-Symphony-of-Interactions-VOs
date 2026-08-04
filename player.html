@@ -15,24 +15,18 @@
   .player-box {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
     padding: 16px 20px;
     background: #FFFFFF;
     width: 100%;
-    max-width: 700px;
+    max-width: 1000px; /* Expanded for a wider layout */
     box-sizing: border-box;
-  }
-  .title {
-    color: #002C4C;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    margin-bottom: 4px;
   }
   .controls {
     display: flex;
     align-items: center;
     gap: 14px;
+    width: 100%;
   }
   .play-btn {
     background: #62B6F3;
@@ -63,23 +57,23 @@
     flex-shrink: 0;
   }
   .progress-container {
-    flex: 1;
-    height: 4px;
+    flex: 1; /* Allows the bar to expand dynamically to take up available space */
+    height: 8px; /* Slightly thicker bar so it's less squished */
     background: #D9D9D6;
-    border-radius: 2px;
+    border-radius: 4px;
     cursor: pointer;
     position: relative;
   }
   .progress-bar {
     height: 100%;
-    width: 50%;
+    width: 0%;
     background: #B1B3B3;
-    border-radius: 2px;
+    border-radius: 4px;
   }
   .time-row {
     display: flex;
     justify-content: space-between;
-    padding-left: 106px;
+    padding-left: 0; /* Align timestamps directly under the control bar */
     color: #75787B;
     font-size: 12px;
   }
@@ -115,6 +109,7 @@
     const durationTimeEl = document.getElementById('durationTime');
 
     function formatTime(t) {
+      if (isNaN(t)) return "0:00";
       const m = Math.floor(t / 60);
       const s = Math.floor(t % 60).toString().padStart(2, '0');
       return `${m}:${s}`;
