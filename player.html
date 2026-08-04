@@ -79,7 +79,7 @@
   .time-row {
     display: flex;
     justify-content: space-between;
-    padding-left: 106px; /* aligns under the progress bar, not the buttons */
+    padding-left: 106px;
     color: #75787B;
     font-size: 12px;
   }
@@ -87,7 +87,6 @@
 </head>
 <body>
   <div class="player-box">
-    <div class="title" id="titleText"></div>
     <div class="controls">
       <button class="play-btn" id="playBtn">▶</button>
       <button class="mute-btn" id="muteBtn">🔊</button>
@@ -104,8 +103,6 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const src = params.get('src');
-    const title = params.get('title') || '';
-    document.getElementById('titleText').textContent = title;
 
     const audio = document.getElementById('audio');
     audio.src = src;
