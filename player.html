@@ -16,7 +16,7 @@
     background: #002C4C;
     border: 1px solid #00629B;
     border-radius: 10px;
-    max-width: 800px;
+    max-width: 500px;
     box-sizing: border-box;
   }
   .title {
@@ -27,18 +27,21 @@
   }
   audio {
     width: 100%;
-    height: 200px;
+    height: 32px;
   }
   audio::-webkit-media-controls-panel {
     background-color: #00629B;
     border-radius: 6px;
+  }
+  audio::-webkit-media-controls-overflow-button {
+    display: none;
   }
 </style>
 </head>
 <body>
   <div class="player-box">
     <div class="title" id="titleText"></div>
-    <audio controls preload="metadata" id="player"></audio>
+    <audio controls controlsList="nodownload noplaybackrate" preload="metadata" id="player"></audio>
   </div>
   <script>
     const params = new URLSearchParams(window.location.search);
