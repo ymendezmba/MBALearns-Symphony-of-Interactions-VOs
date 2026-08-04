@@ -7,33 +7,32 @@
     padding: 0;
     background: transparent;
     font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
   }
+
   .player-box {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 16px 20px;
-    background: #FFFFFF;
-    width: 100%;
-    max-width: 1000px; /* Expanded for a wider layout */
+    gap: 8px;
+    padding: 12px 0;
+    width: 100%; /* Spans full container width */
     box-sizing: border-box;
   }
+
   .controls {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     width: 100%;
   }
+
   .play-btn {
     background: #62B6F3;
     border: none;
     color: #000000;
-    width: 56px;
-    height: 56px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     cursor: pointer;
     font-size: 20px;
@@ -42,6 +41,7 @@
     justify-content: center;
     flex-shrink: 0;
   }
+
   .mute-btn {
     background: #62B6F3;
     border: none;
@@ -56,24 +56,28 @@
     justify-content: center;
     flex-shrink: 0;
   }
+
   .progress-container {
-    flex: 1; /* Allows the bar to expand dynamically to take up available space */
-    height: 8px; /* Slightly thicker bar so it's less squished */
+    flex: 1; /* Drives the bar to fill all remaining horizontal space */
+    height: 8px;
     background: #D9D9D6;
     border-radius: 4px;
     cursor: pointer;
     position: relative;
   }
+
   .progress-bar {
     height: 100%;
     width: 0%;
     background: #B1B3B3;
     border-radius: 4px;
   }
+
   .time-row {
     display: flex;
     justify-content: space-between;
-    padding-left: 0; /* Align timestamps directly under the control bar */
+    /* 52px (play) + 36px (mute) + 24px (2 gaps) = 112px offset to align under progress bar */
+    margin-left: 112px; 
     color: #75787B;
     font-size: 12px;
   }
@@ -99,7 +103,7 @@
     const src = params.get('src');
 
     const audio = document.getElementById('audio');
-    audio.src = src;
+    if (src) audio.src = src;
 
     const playBtn = document.getElementById('playBtn');
     const muteBtn = document.getElementById('muteBtn');
@@ -132,7 +136,7 @@
 
     audio.addEventListener('timeupdate', () => {
       const pct = (audio.currentTime / audio.duration) * 100;
-      progressBar.style.width = pct + '%';
+      progressBar.style.width = (pct || 0) + '%';
       currentTimeEl.textContent = formatTime(audio.currentTime);
     });
 
