@@ -15,13 +15,11 @@
   .player-box {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 14px 18px;
+    gap: 6px;
+    padding: 16px 20px;
     background: #FFFFFF;
-    border: 1px solid #B1B3B3;
-    border-radius: 10px;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     box-sizing: border-box;
   }
   .title {
@@ -29,19 +27,34 @@
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.2px;
+    margin-bottom: 4px;
   }
   .controls {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
   }
   .play-btn {
-    background: #002C4C;
+    background: #62B6F3;
     border: none;
-    color: #FFFFFF;
-    width: 34px;
-    height: 34px;
+    color: #000000;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .mute-btn {
+    background: #62B6F3;
+    border: none;
+    color: #000000;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
     display: flex;
@@ -51,24 +64,24 @@
   }
   .progress-container {
     flex: 1;
-    height: 6px;
+    height: 4px;
     background: #D9D9D6;
-    border-radius: 3px;
+    border-radius: 2px;
     cursor: pointer;
     position: relative;
   }
   .progress-bar {
     height: 100%;
     width: 0%;
-    background: #00629B;
-    border-radius: 3px;
+    background: #B1B3B3;
+    border-radius: 2px;
   }
-  .time {
-    color: #002C4C;
-    font-size: 11px;
-    min-width: 70px;
-    text-align: right;
-    flex-shrink: 0;
+  .time-row {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 106px; /* aligns under the progress bar, not the buttons */
+    color: #75787B;
+    font-size: 12px;
   }
 </style>
 </head>
@@ -77,10 +90,14 @@
     <div class="title" id="titleText"></div>
     <div class="controls">
       <button class="play-btn" id="playBtn">▶</button>
+      <button class="mute-btn" id="muteBtn">🔊</button>
       <div class="progress-container" id="progressContainer">
         <div class="progress-bar" id="progressBar"></div>
       </div>
-      <div class="time" id="timeDisplay">0:00 / 0:00</div>
+    </div>
+    <div class="time-row">
+      <span id="currentTime">0:00</span>
+      <span id="durationTime">0:00</span>
     </div>
   </div>
   <audio id="audio" preload="metadata"></audio>
@@ -94,9 +111,11 @@
     audio.src = src;
 
     const playBtn = document.getElementById('playBtn');
+    const muteBtn = document.getElementById('muteBtn');
     const progressContainer = document.getElementById('progressContainer');
     const progressBar = document.getElementById('progressBar');
-    const timeDisplay = document.getElementById('timeDisplay');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationTimeEl = document.getElementById('durationTime');
 
     function formatTime(t) {
       const m = Math.floor(t / 60);
@@ -114,14 +133,19 @@
       }
     });
 
+    muteBtn.addEventListener('click', () => {
+      audio.muted = !audio.muted;
+      muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+    });
+
     audio.addEventListener('timeupdate', () => {
       const pct = (audio.currentTime / audio.duration) * 100;
       progressBar.style.width = pct + '%';
-      timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration || 0)}`;
+      currentTimeEl.textContent = formatTime(audio.currentTime);
     });
 
     audio.addEventListener('loadedmetadata', () => {
-      timeDisplay.textContent = `0:00 / ${formatTime(audio.duration)}`;
+      durationTimeEl.textContent = formatTime(audio.duration);
     });
 
     audio.addEventListener('ended', () => {
