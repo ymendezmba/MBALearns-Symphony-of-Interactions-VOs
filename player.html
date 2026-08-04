@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   html, body {
     margin: 0;
     padding: 0;
     background: transparent;
     font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
-    width: 100%;
+    width: 100vw; /* Forces 100% width of the iframe viewport */
     box-sizing: border-box;
+    overflow: hidden;
   }
 
   .player-box {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 10px 0;
+    padding: 10px 15px;
     box-sizing: border-box;
   }
 
@@ -56,13 +58,13 @@
     flex-shrink: 0;
   }
 
-  /* Right-side container grouping progress bar & timestamps together */
+  /* Right-side container for progress bar & timestamps */
   .progress-section {
-    flex: 1;
+    flex: 1; /* Takes up all available horizontal space */
     display: flex;
     flex-direction: column;
     gap: 6px;
-    min-width: 150px; /* Prevents bar from collapsing/disappearing */
+    min-width: 200px; /* Ensures the playbar stays wide even in tight Litmos containers */
   }
 
   .progress-container {
@@ -95,7 +97,6 @@
       <button class="play-btn" id="playBtn">▶</button>
       <button class="mute-btn" id="muteBtn">🔊</button>
       
-      <!-- Progress Bar & Time bundled together -->
       <div class="progress-section">
         <div class="progress-container" id="progressContainer">
           <div class="progress-bar" id="progressBar"></div>
