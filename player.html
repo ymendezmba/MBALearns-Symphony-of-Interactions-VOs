@@ -13,10 +13,9 @@
 
   .player-box {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 12px 0;
-    width: 100%; /* Spans full container width */
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
     box-sizing: border-box;
   }
 
@@ -57,8 +56,17 @@
     flex-shrink: 0;
   }
 
+  /* Right-side container grouping progress bar & timestamps together */
+  .progress-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 150px; /* Prevents bar from collapsing/disappearing */
+  }
+
   .progress-container {
-    flex: 1; /* Drives the bar to fill all remaining horizontal space */
+    width: 100%;
     height: 8px;
     background: #D9D9D6;
     border-radius: 4px;
@@ -76,8 +84,6 @@
   .time-row {
     display: flex;
     justify-content: space-between;
-    /* 52px (play) + 36px (mute) + 24px (2 gaps) = 112px offset to align under progress bar */
-    margin-left: 112px; 
     color: #75787B;
     font-size: 12px;
   }
@@ -88,16 +94,22 @@
     <div class="controls">
       <button class="play-btn" id="playBtn">▶</button>
       <button class="mute-btn" id="muteBtn">🔊</button>
-      <div class="progress-container" id="progressContainer">
-        <div class="progress-bar" id="progressBar"></div>
+      
+      <!-- Progress Bar & Time bundled together -->
+      <div class="progress-section">
+        <div class="progress-container" id="progressContainer">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="time-row">
+          <span id="currentTime">0:00</span>
+          <span id="durationTime">0:00</span>
+        </div>
       </div>
     </div>
-    <div class="time-row">
-      <span id="currentTime">0:00</span>
-      <span id="durationTime">0:00</span>
-    </div>
   </div>
+
   <audio id="audio" preload="metadata"></audio>
+
   <script>
     const params = new URLSearchParams(window.location.search);
     const src = params.get('src');
