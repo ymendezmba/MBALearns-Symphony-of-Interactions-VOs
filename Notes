@@ -1,0 +1,6 @@
+Use this as the embed code:
+
+<iframe src="https://ymendezmba.github.io/MBALearns-Symphony-of-Interactions-VOs/player.html?src=Alberto_9.1.mp3" style="width: 100%; min-width: 100%; height: 80px; border: none; display: block;"></iframe>
+
+Change the serc= to the file name in the github folder. 
+If the file is not in the folder, make sure to add it or it wont work 
